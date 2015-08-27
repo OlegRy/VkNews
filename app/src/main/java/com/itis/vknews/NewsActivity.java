@@ -23,7 +23,6 @@ import com.itis.vknews.model.Item;
 import com.itis.vknews.services.RequestService;
 import com.itis.vknews.utils.Constants;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.VKUIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,6 @@ public class NewsActivity extends AppCompatActivity implements NewsFragment.OnRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        VKUIHelper.onCreate(this);
 
         app_bar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(app_bar);
@@ -81,33 +79,12 @@ public class NewsActivity extends AppCompatActivity implements NewsFragment.OnRe
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        VKUIHelper.onResume(this);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
 
         if (!mBound) return;
         unbindService(mConnection);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        VKUIHelper.onDestroy(this);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mHandleMessageReceiver);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

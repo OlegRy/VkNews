@@ -4,7 +4,7 @@ import com.vk.sdk.VKScope;
 
 public class Constants {
 
-    public static final String APP_ID = "4935099";
+    //public static final String APP_ID = "4935099";
     public static final String[] SCOPES = { VKScope.WALL, VKScope.FRIENDS };
 
 

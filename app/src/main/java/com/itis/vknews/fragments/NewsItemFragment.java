@@ -83,8 +83,8 @@ public class NewsItemFragment extends Fragment {
         if (mItem instanceof Post) {
             tv_text.setText(((Post) mItem).getText());
         }
-        tv_likes_count.setText(mItem.getLikes());
-        tv_reposts_count.setText(mItem.getReposts());
+        tv_likes_count.setText(Integer.toString(mItem.getLikes()));
+        tv_reposts_count.setText(Integer.toString(mItem.getReposts()));
         fillImageViews();
     }
 

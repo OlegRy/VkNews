@@ -28,7 +28,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private LinearLayoutManager mLayoutManager;
     private NewsAdapter mAdapter;
     private List<Item> mItems;
-    private OnRefreshFragment mCallback;
+    private OnRefreshFragment mRefreshFragmentListener;
     private OnNewsItemClickListener mItemClickListener;
 
     public interface OnRefreshFragment {
@@ -76,22 +76,22 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mCallback = (OnRefreshFragment) activity;
+        mRefreshFragmentListener = (OnRefreshFragment) activity;
         mItemClickListener = (OnNewsItemClickListener) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallback = null;
+        mRefreshFragmentListener = null;
         mItemClickListener = null;
     }
 
     @Override
     public void onRefresh() {
         refresh_layout.setRefreshing(true);
-        if (mCallback != null) {
-            mCallback.onRefresh();
+        if (mRefreshFragmentListener != null) {
+            mRefreshFragmentListener.onRefresh();
         }
         refresh_layout.setRefreshing(false);
     }
@@ -99,7 +99,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onItemClick(int position) {
         if (mItemClickListener != null) {
-            mItemClickListener.onNewsItemClick(mItems.get(position));
+           // mItemClickListener.onNewsItemClick(mItems.get(position));
         }
     }
 }

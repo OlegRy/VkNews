@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">VkNews</string>
-
+    
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="news_label">News</string>
@@ -17,7 +17,7 @@
     <string name="logout_positive_answer">Yes</string>
     <string name="logout_negative_answer">No</string>
     <string name="welcome_text">Welcome to simple vk newsfeed client! You can start using this application by clicking \"Authorize\" button.</string>
+    <string name="authorization_error">Failed to authorize</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <integer name="com_vk_sdk_AppId">4935099</integer>
 </resources>

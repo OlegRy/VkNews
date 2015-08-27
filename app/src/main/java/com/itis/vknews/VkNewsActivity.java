@@ -1,23 +1,20 @@
 package com.itis.vknews;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.itis.vknews.fragments.AuthorizationFragment;
-import com.itis.vknews.utils.Constants;
 import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.VKSdkListener;
-import com.vk.sdk.VKUIHelper;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.dialogs.VKCaptchaDialog;
 
 
 public class VkNewsActivity extends AppCompatActivity {
 
-    private VKSdkListener mVKSdkListener = new VKSdkListener() {
+    /*private VKSdkListener mVKSdkListener = new VKSdkListener() {
         @Override
         public void onCaptchaError(VKError vkError) {
             new VKCaptchaDialog(vkError).show(VkNewsActivity.this);
@@ -33,15 +30,13 @@ public class VkNewsActivity extends AppCompatActivity {
             new AlertDialog.Builder(VKUIHelper.getTopActivity())
                     .setMessage(vkError.toString()).show();
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk_news);
-        VKSdk.initialize(mVKSdkListener, Constants.APP_ID);
-        VKUIHelper.onCreate(this);
-        if (VKSdk.wakeUpSession()) {
+        if (VKSdk.wakeUpSession(getApplicationContext())) {
             showNewsActivity();
         } else {
             showAuthorizationFragment();
@@ -64,21 +59,28 @@ public class VkNewsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        VKUIHelper.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        VKUIHelper.onDestroy(this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            showNewsActivity();
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken vkAccessToken) {
+                showNewsActivity();
+            }
+
+            @Override
+            public void onError(VKError vkError) {
+                showAuthorizationFragment();
+                Toast.makeText(VkNewsActivity.this, R.string.authorization_error, Toast.LENGTH_LONG).show();
+            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".VkNewsApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,6 +23,10 @@
         <activity
             android:name=".NewsActivity"
             android:label="@string/news_label" />
+        <activity android:name="com.vk.sdk.VKOpenAuthActivity" />
+        <activity android:name="com.vk.sdk.VKServiceActivity"
+                  android:label="ServiceActivity"
+                  android:theme="@style/VK.Transparent" />
 
         <service android:name=".services.RequestService"/>
     </application>

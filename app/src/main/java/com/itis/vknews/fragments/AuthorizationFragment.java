@@ -25,7 +25,7 @@ public class AuthorizationFragment extends Fragment {
         btn_authorize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VKSdk.authorize(Constants.SCOPES);
+                VKSdk.login(getActivity(), Constants.SCOPES);
             }
         });
         return view;
