@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/tv_welcome_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/welcome_text"
+        android:padding="10dp"
+        android:textColor="@color/textPrimary"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/btn_authorize"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/round_button_selector"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:text="@string/authorize"/>
+</LinearLayout>
