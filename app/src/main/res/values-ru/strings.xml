@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="news_label">Новости</string>
+    <string name="authorize">Авторизоваться</string>
+    <string name="text">Примерный текст</string>
+    <string name="tv_text">
+        Это длинный примерный текст. Он ничего не означает. Этот компонент используется для отображения
+        текста поста из Вк в приложении
+    </string>
+    <string name="author">Имя Фамилия</string>
+    <string name="action_logout">выход</string>
+    <string name="logout_title">Выйти</string>
+    <string name="logout_message">Вы уверены, что хотите выйти?</string>
+    <string name="logout_positive_answer">Да</string>
+    <string name="logout_negative_answer">Нет</string>
+    <string name="welcome_text">
+        Добро пожаловать в простой клиент Вконтакте! Вы можете начать пользоваться приложением,
+        нажав на кнопку \"Авторизоваться\".
+    </string>
+    <string name="authorization_error">Ошиька авторизации</string>
+</resources>
