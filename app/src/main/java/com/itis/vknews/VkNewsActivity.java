@@ -14,23 +14,7 @@ import com.vk.sdk.api.VKError;
 
 public class VkNewsActivity extends AppCompatActivity {
 
-    /*private VKSdkListener mVKSdkListener = new VKSdkListener() {
-        @Override
-        public void onCaptchaError(VKError vkError) {
-            new VKCaptchaDialog(vkError).show(VkNewsActivity.this);
-        }
 
-        @Override
-        public void onTokenExpired(VKAccessToken vkAccessToken) {
-            VKSdk.authorize(Constants.SCOPES);
-        }
-
-        @Override
-        public void onAccessDenied(VKError vkError) {
-            new AlertDialog.Builder(VKUIHelper.getTopActivity())
-                    .setMessage(vkError.toString()).show();
-        }
-    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

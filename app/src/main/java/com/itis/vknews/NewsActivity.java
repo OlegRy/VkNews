@@ -22,6 +22,7 @@ import com.itis.vknews.fragments.NewsItemFragment;
 import com.itis.vknews.model.Item;
 import com.itis.vknews.services.RequestService;
 import com.itis.vknews.utils.Constants;
+import com.itis.vknews.utils.ParseUtils;
 import com.vk.sdk.VKSdk;
 
 import java.util.ArrayList;
@@ -37,8 +38,13 @@ public class NewsActivity extends AppCompatActivity implements NewsFragment.OnRe
     private BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            boolean pulled = intent.getBooleanExtra(Constants.INTENT_PULLED, false);
             ArrayList<Item> items = (ArrayList<Item>) intent.getSerializableExtra(Constants.INTENT_LIST);
-            showNews(items);
+            if (pulled) showNews(items);
+            else {
+                NewsFragment fragment = (NewsFragment) NewsActivity.this.getSupportFragmentManager().findFragmentById(R.id.container);
+                if (fragment != null) fragment.updateList(items);
+            }
         }
     };
 
@@ -138,9 +144,10 @@ public class NewsActivity extends AppCompatActivity implements NewsFragment.OnRe
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(boolean pulled) {
         if (mService != null) {
-            mService.loadNews("");
+            if (pulled) mService.loadNews("");
+            else mService.loadNews(ParseUtils.getNextFrom());
         }
     }
 

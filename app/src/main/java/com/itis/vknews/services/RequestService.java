@@ -45,7 +45,7 @@ public class RequestService extends Service {
         return mBinder;
     }
 
-    public void loadNews(String startFrom) {
+    public void loadNews(final String startFrom) {
         if (startFrom.equals("")) {
             mItems.clear();
         }
@@ -63,7 +63,7 @@ public class RequestService extends Service {
                 try {
                     mItems = ParseUtils.parse(result);
                     mStartFrom = ParseUtils.getNextFrom();
-                    sendMessage();
+                    sendMessage(startFrom);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -74,18 +74,12 @@ public class RequestService extends Service {
 
     }
 
-    private void sendMessage() {
+    private void sendMessage(String startFrom) {
         Intent intent = new Intent(Constants.SERVICE_INTENT_BROADCAST);
 
+        intent.putExtra(Constants.INTENT_PULLED, startFrom.equals(""));
         intent.putExtra(Constants.INTENT_LIST, (ArrayList<Item>) mItems);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    public List<Item> getItems() {
-        return mItems;
-    }
-
-    public String getStartFrom() {
-        return mStartFrom;
-    }
 }

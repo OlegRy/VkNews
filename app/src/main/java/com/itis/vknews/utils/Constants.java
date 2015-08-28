@@ -10,6 +10,7 @@ public class Constants {
 
     public static final String SERVICE_INTENT_BROADCAST = "com.itis.vknews.services.RequestService";
     public static final String INTENT_LIST = "mItems";
+    public static final String INTENT_PULLED = "pulled";
     public static final String BUNDLE_ITEM = "item";
 
     public static final String METHOD_NAME = "newsfeed.get";

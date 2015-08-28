@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.itis.vknews.R;
 import com.itis.vknews.adapters.NewsAdapter;
 import com.itis.vknews.model.Item;
+import com.itis.vknews.utils.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private OnNewsItemClickListener mItemClickListener;
 
     public interface OnRefreshFragment {
-        void onRefresh();
+        void onRefresh(boolean pulled);
     }
 
     public interface OnNewsItemClickListener {
@@ -45,6 +46,13 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         args.putSerializable(ARG_TAG, (ArrayList<Item>) items);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void updateList(ArrayList<Item> items) {
+        if (mItems != null) {
+            mItems.addAll(items);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -69,6 +77,12 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         rv_news.setLayoutManager(mLayoutManager);
         rv_news.setAdapter(mAdapter);
+        rv_news.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                mRefreshFragmentListener.onRefresh(false);
+            }
+        });
         refresh_layout.setOnRefreshListener(this);
         return view;
     }
@@ -91,7 +105,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         refresh_layout.setRefreshing(true);
         if (mRefreshFragmentListener != null) {
-            mRefreshFragmentListener.onRefresh();
+            mRefreshFragmentListener.onRefresh(true);
         }
         refresh_layout.setRefreshing(false);
     }
