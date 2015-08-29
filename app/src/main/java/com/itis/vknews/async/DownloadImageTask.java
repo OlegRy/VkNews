@@ -22,7 +22,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     public DownloadImageTask(ImageView imageView, LinearLayout linearLayout) {
         this(imageView);
-        mLinearLayoutWeakReference = new WeakReference<LinearLayout>(linearLayout);
+        mLinearLayoutWeakReference = new WeakReference<>(linearLayout);
     }
 
     @Override
@@ -45,11 +45,14 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         super.onPostExecute(bitmap);
         if (bitmap != null) {
             ImageView imageView = mImageViewWeakReference.get();
-            imageView.setImageBitmap(bitmap);
-            if (mLinearLayoutWeakReference != null) {
-                LinearLayout linearLayout = mLinearLayoutWeakReference.get();
-                linearLayout.addView(imageView);
+            if (imageView != null) {
+                imageView.setImageBitmap(bitmap);
+                if (mLinearLayoutWeakReference != null) {
+                    LinearLayout linearLayout = mLinearLayoutWeakReference.get();
+                    linearLayout.addView(imageView);
+                }
             }
+
         }
 
     }

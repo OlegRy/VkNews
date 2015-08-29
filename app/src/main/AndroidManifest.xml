@@ -22,7 +22,8 @@
 
         <activity
             android:name=".NewsActivity"
-            android:label="@string/news_label" />
+            android:label="@string/news_label"
+            android:configChanges="orientation|screenSize|locale"/>
         <activity android:name="com.vk.sdk.VKOpenAuthActivity" />
         <activity android:name="com.vk.sdk.VKServiceActivity"
                   android:label="ServiceActivity"

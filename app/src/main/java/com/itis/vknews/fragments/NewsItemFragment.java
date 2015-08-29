@@ -78,6 +78,7 @@ public class NewsItemFragment extends Fragment {
 
     private void fillViews() {
         tv_author.setText(mItem.getAuthor().getName());
+        new DownloadImageTask(iv_avatar).execute(mItem.getAuthor().getAvatar());
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         tv_date.setText(format.format(new Date(mItem.getDate() * 1000)));
         if (mItem instanceof Post) {

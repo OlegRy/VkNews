@@ -112,8 +112,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onItemClick(int position) {
-        if (mItemClickListener != null) {
-           // mItemClickListener.onNewsItemClick(mItems.get(position));
-        }
+        if (mItemClickListener != null) mItemClickListener.onNewsItemClick(mItems.get(position));
     }
 }
