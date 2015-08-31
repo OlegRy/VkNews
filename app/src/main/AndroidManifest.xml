@@ -24,10 +24,16 @@
             android:name=".NewsActivity"
             android:label="@string/news_label"
             android:configChanges="orientation|screenSize|locale"/>
+
         <activity android:name="com.vk.sdk.VKOpenAuthActivity" />
+
         <activity android:name="com.vk.sdk.VKServiceActivity"
                   android:label="ServiceActivity"
                   android:theme="@style/VK.Transparent" />
+
+        <activity android:name=".FullPhotoActivity"
+            android:label="@string/full_photo"
+            android:configChanges="orientation|screenSize|locale" />
 
         <service android:name=".services.RequestService"/>
     </application>

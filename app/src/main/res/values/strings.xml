@@ -18,6 +18,13 @@
     <string name="logout_negative_answer">No</string>
     <string name="welcome_text">Welcome to simple vk newsfeed client! You can start using this application by clicking \"Authorize\" button.</string>
     <string name="authorization_error">Failed to authorize</string>
+    <string name="ll_images">Photo</string>
+    <string name="ll_videos">Videos</string>
+    <string name="ll_audios">Audios</string>
+    <string name="full_photo">Photo</string>
+    <string name="error_download">Unable to download photo</string>
+    <string name="photo_number">Photo %1$d of %2$d</string>
+
 
     <integer name="com_vk_sdk_AppId">4935099</integer>
 </resources>

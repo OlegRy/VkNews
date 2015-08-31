@@ -3,6 +3,7 @@ package com.itis.vknews.async;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -43,14 +44,17 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        if (bitmap != null) {
-            ImageView imageView = mImageViewWeakReference.get();
-            if (imageView != null) {
+        ImageView imageView = mImageViewWeakReference.get();
+        if (imageView != null) {
+            if (bitmap != null) {
+
                 imageView.setImageBitmap(bitmap);
                 if (mLinearLayoutWeakReference != null) {
                     LinearLayout linearLayout = mLinearLayoutWeakReference.get();
                     linearLayout.addView(imageView);
                 }
+            } else {
+                imageView.setVisibility(View.GONE);
             }
 
         }

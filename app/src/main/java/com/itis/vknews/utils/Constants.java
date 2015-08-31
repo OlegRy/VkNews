@@ -11,7 +11,12 @@ public class Constants {
     public static final String SERVICE_INTENT_BROADCAST = "com.itis.vknews.services.RequestService";
     public static final String INTENT_LIST = "mItems";
     public static final String INTENT_PULLED = "pulled";
+    public static final String INTENT_PHOTO_LIST = "photo_list";
+    public static final String INTENT_CURRENT_PHOTO = "current_photo";
     public static final String BUNDLE_ITEM = "item";
+    public static final String BUNDLE_PAGE = "page";
+    public static final String BUNDLE_BITMAP = "bitmap";
+    public static final String BUNDLE_PAGE_COUNT = "page_count";
 
     public static final String METHOD_NAME = "newsfeed.get";
     public static final String FILTER_NAMES = "post,photo";
@@ -47,7 +52,7 @@ public class Constants {
     public static final String JSON_AUDIO_ATTACHMENT = "audio";
     public static final String JSON_VIDEO_ATTACHMENT = "video";
     public static final String JSON_ATTACHMENT_ID = "id";
-    public static final String JSON_SMALL_PHOTO = "photo_604";
+    public static final String JSON_SMALL_PHOTO = "photo_130";
     public static final String JSON_BIG_PHOTO = "photo_604";
     public static final String JSON_ARTIST = "artist";
     public static final String JSON_TITLE = "title";
@@ -57,5 +62,5 @@ public class Constants {
     public static final String JSON_NEXT_FROM = "next_from";
     public static final String JSON_PHOTOS = "photos";
     public static final String JSON_AUTHOR_ID = "id";
-    public static final String JSON_SOURCE_ID = "source_id";
+    public static final String JSON_SOURCE_ID = "source_id";;
 }

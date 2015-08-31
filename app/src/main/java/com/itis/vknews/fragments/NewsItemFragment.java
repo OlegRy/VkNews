@@ -1,5 +1,7 @@
 package com.itis.vknews.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.itis.vknews.FullPhotoActivity;
 import com.itis.vknews.R;
 import com.itis.vknews.async.DownloadImageTask;
+import com.itis.vknews.async.DownloadSomeImagesTask;
 import com.itis.vknews.model.Attachment;
 import com.itis.vknews.model.Item;
 import com.itis.vknews.model.Photo;
@@ -21,7 +25,9 @@ import com.itis.vknews.model.VideoAttachment;
 import com.itis.vknews.utils.Constants;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class NewsItemFragment extends Fragment {
 
@@ -32,6 +38,11 @@ public class NewsItemFragment extends Fragment {
     private TextView tv_date;
     private TextView tv_text;
     private LinearLayout ll_images;
+    private LinearLayout ll_audio;
+    private LinearLayout ll_videos;
+    private LinearLayout ll_title_photo;
+    private LinearLayout ll_title_video;
+    private LinearLayout ll_title_audio;
     private TextView tv_reposts_count;
     private TextView tv_likes_count;
 
@@ -70,6 +81,11 @@ public class NewsItemFragment extends Fragment {
         tv_date = (TextView) view.findViewById(R.id.tv_date);
         tv_text = (TextView) view.findViewById(R.id.tv_text);
         ll_images = (LinearLayout) view.findViewById(R.id.ll_images);
+        ll_audio = (LinearLayout) view.findViewById(R.id.ll_audios);
+        ll_videos = (LinearLayout) view.findViewById(R.id.ll_videos);
+        ll_title_photo = (LinearLayout) view.findViewById(R.id.ll_title_photo);
+        ll_title_video = (LinearLayout) view.findViewById(R.id.ll_title_video);
+        ll_title_audio = (LinearLayout) view.findViewById(R.id.ll_title_audio);
         tv_likes_count = (TextView) view.findViewById(R.id.tv_likes_count);
         tv_reposts_count = (TextView) view.findViewById(R.id.tv_reposts_count);
 
@@ -100,30 +116,89 @@ public class NewsItemFragment extends Fragment {
     }
 
     private void fillByPhotos(Photo photo) {
-        for (String url : photo.getBigPhotos()) {
-            fillImageView(url, false);
+        List<String> smallImages = new ArrayList<>();
+        List<String> bigImages = new ArrayList<>();
+
+        smallImages.addAll(photo.getSmallPhotos());
+        bigImages.addAll(photo.getBigPhotos());
+
+        if (smallImages.size() > 0) {
+            String[] imageArray = new String[smallImages.size()];
+            imageArray = smallImages.toArray(imageArray);
+            new DownloadSomeImagesTask(getActivity(), ll_images, bigImages).execute(imageArray);
         }
+
+        //setListenerToImageView(smallImages);
     }
 
     private void fillByAttachments(Post post) {
-        for (Attachment attachment : post.getAttachments()) {
-            if (attachment instanceof PhotoAttachment) {
-                fillImageView(((PhotoAttachment) attachment).getBigPhoto(), false);
-            } else if (attachment instanceof VideoAttachment) {
-                fillImageView(((VideoAttachment) attachment).getPhoto(), true);
-            } else {
+        List<String> smallImages = new ArrayList<>();
+        List<String> bigImages = new ArrayList<>();
+        if (post.getAttachments() != null) {
+            for (Attachment attachment : post.getAttachments()) {
+                if (attachment instanceof PhotoAttachment) {
+                    smallImages.add(((PhotoAttachment) attachment).getSmallPhoto());
+                    bigImages.add(((PhotoAttachment) attachment).getBigPhoto());
+                    ll_title_photo.setVisibility(View.VISIBLE);
+                    //fillImageView(((PhotoAttachment) attachment).getSmallPhoto(), false);
 
+                } else if (attachment instanceof VideoAttachment) {
+                    ll_title_video.setVisibility(View.VISIBLE);
+                    fillImageView(((VideoAttachment) attachment).getPhoto(), true);
+                } else {
+                    ll_title_audio.setVisibility(View.VISIBLE);
+                }
+            }
+            if (smallImages.size() > 0) {
+                String[] imageArray = new String[smallImages.size()];
+                imageArray = smallImages.toArray(imageArray);
+                new DownloadSomeImagesTask(getActivity(), ll_images, bigImages).execute(imageArray);
             }
         }
+        //setListenerToImageView(smallImages);
     }
 
-    private void fillImageView(String url, boolean isVideo) {
+    private void fillImageView(final String url, boolean isVideo) {
         ImageView image = new ImageView(getActivity());
         image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         if (isVideo) {
-
+            new DownloadImageTask(image, ll_videos).execute(url);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (url != null) {
+                        Uri webUri = Uri.parse(url);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, webUri);
+                        if (browserIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                            startActivity(browserIntent);
+                        }
+                    }
+                }
+            });
         }
-        new DownloadImageTask(image, ll_images).execute(url);
+        else new DownloadImageTask(image, ll_images).execute(url);
+    }
+
+    private void setListenerToImageView(final List<String> images) {
+
+        if (images.size() > 0) {
+            for (int i = 0; i < images.size(); i++) {
+                ImageView image = (ImageView) ll_images.getChildAt(i);
+                image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent photoIntent = new Intent(getActivity(), FullPhotoActivity.class);
+
+                        photoIntent.putStringArrayListExtra(Constants.INTENT_PHOTO_LIST,
+                                (ArrayList<String>) images);
+
+                        getActivity().startActivity(photoIntent);
+                    }
+                });
+
+            }
+        }
     }
 }

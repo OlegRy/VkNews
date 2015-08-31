@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -66,30 +67,30 @@ public class NewsActivity extends AppCompatActivity implements NewsFragment.OnRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-
         app_bar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(app_bar);
+
+        Intent i = new Intent(this, RequestService.class);
+
+        bindService(i, mConnection, BIND_AUTO_CREATE);
 
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mHandleMessageReceiver,
                         new IntentFilter(Constants.SERVICE_INTENT_BROADCAST));
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        Intent i = new Intent(this, RequestService.class);
-
-        bindService(i, mConnection, BIND_AUTO_CREATE);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!mBound) return;
+        unbindService(mConnection);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (!mBound) return;
-        unbindService(mConnection);
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        Log.d("tag", "onRF");
     }
 
     @Override
