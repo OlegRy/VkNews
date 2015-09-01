@@ -4,11 +4,14 @@ import com.vk.sdk.VKScope;
 
 public class Constants {
 
-    //public static final String APP_ID = "4935099";
     public static final String[] SCOPES = { VKScope.WALL, VKScope.FRIENDS };
 
 
     public static final String SERVICE_INTENT_BROADCAST = "com.itis.vknews.services.RequestService";
+
+    public static final String AUDIO_SERVICE_ACTION_PLAY = "PLAY";
+    public static final String AUDIO_SERVICE_ACTION_PAUSE = "pause";
+    public static final String AUDIO_SERVICE_DATA_SOURCE = "data_source";
     public static final String INTENT_LIST = "mItems";
     public static final String INTENT_PULLED = "pulled";
     public static final String INTENT_PHOTO_LIST = "photo_list";
@@ -62,5 +65,5 @@ public class Constants {
     public static final String JSON_NEXT_FROM = "next_from";
     public static final String JSON_PHOTOS = "photos";
     public static final String JSON_AUTHOR_ID = "id";
-    public static final String JSON_SOURCE_ID = "source_id";;
+    public static final String JSON_SOURCE_ID = "source_id";
 }

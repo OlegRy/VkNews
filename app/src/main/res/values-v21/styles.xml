@@ -8,6 +8,7 @@
         <item name="android:textColorPrimary">@color/textPrimary</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:divider">@color/divider</item>
+        <item name="morphButtonStyle">@style/Widget.MorphButton</item>
     </style>
 
 </resources>

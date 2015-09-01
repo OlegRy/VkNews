@@ -24,6 +24,9 @@
     <string name="full_photo">Photo</string>
     <string name="error_download">Unable to download photo</string>
     <string name="photo_number">Photo %1$d of %2$d</string>
+    <string name="tv_song_title">Get lucky</string>
+    <string name="tv_song_author">Daft Punk</string>
+    <string name="tv_duration">5:28</string>
 
 
     <integer name="com_vk_sdk_AppId">4935099</integer>

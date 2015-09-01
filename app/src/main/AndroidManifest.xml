@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
     package="com.itis.vknews" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-sdk tools:overrideLibrary="com.wnafee.vector" />
 
     <application
         android:name=".VkNewsApp"
@@ -36,6 +39,7 @@
             android:configChanges="orientation|screenSize|locale" />
 
         <service android:name=".services.RequestService"/>
+        <service android:name=".services.AudioService" />
     </application>
 
 </manifest>

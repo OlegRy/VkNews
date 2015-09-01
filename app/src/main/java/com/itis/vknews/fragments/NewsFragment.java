@@ -1,6 +1,6 @@
 package com.itis.vknews.fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -83,15 +83,16 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 mRefreshFragmentListener.onRefresh(false);
             }
         });
+        refresh_layout.setColorSchemeColors(R.color.primary, R.color.accent, R.color.textPrimary);
         refresh_layout.setOnRefreshListener(this);
         return view;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mRefreshFragmentListener = (OnRefreshFragment) activity;
-        mItemClickListener = (OnNewsItemClickListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mRefreshFragmentListener = (OnRefreshFragment) context;
+        mItemClickListener = (OnNewsItemClickListener) context;
     }
 
     @Override
